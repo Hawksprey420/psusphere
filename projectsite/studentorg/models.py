@@ -42,5 +42,8 @@ class Student (BaseModel):
 
 class OrgMember (BaseModel):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='org_memberships')
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='members')
-    role = models.CharField(max_length=255, null=True, blank=True)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='members')    
+    date_joined = models.DateField()    
+
+    def __str__(self):
+        return f"{self.student} - {self.organization} ({self.date_joined})"

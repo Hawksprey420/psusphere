@@ -13,5 +13,35 @@ class Command(BaseCommand):
     def create_organization (self, count):
         fake = Faker()
         
-        #for_in_range(count):
-            #words = [fake.word() for _ in range(2)]  # two words 
+        for _ in range (count):
+            words = [fake.word() for _ in range (2)]
+            organization_name = ''.join(words)
+            
+            Organization.objects.create(
+                name=organization_name.title(),
+                college = College.objects.order_by('?').first(),
+                description = fake.sentence()
+            )
+        self.stdout.write(self.style.SUCCESS(f'Successfully created {count} organizations.'))
+        
+    def create_students (self, count):
+        fake = Faker('en_PH')
+        for _ in range (count):
+            Student.objects.create(
+                student_id = f"{fake.random_int(min=2020, max=2025)}-{fake.random_int(min=1, max=8)} - {fake.random_number(digits=4)}",
+                last_name = fake.last_name(),
+                first_name = fake.first_name(),
+                middle_name = fake.last_name(),
+                program = Program.objects.order_by('?').first()
+            )
+        self.stdout.write(self.style.SUCCESS(f'Successfully created {count} students.'))
+        
+    def create_membership (self, count):
+        fake = Faker()
+        for _ in range (count):
+            OrgMember.objects.create(
+                student = Student.objects.order_by('?').first(),
+                organization = Organization.objects.order_by('?').first(),
+                date_joined = fake.date_between(start_date="-2y", end_date="today")
+            )
+        self.stdout.write(self.style.SUCCESS(f'Successfully created {count} organization memberships.'))
