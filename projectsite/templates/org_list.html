@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <div class="content">
     <div class="container-fluid">
@@ -13,6 +12,7 @@
                         <div class="card-category">Page Subtitle</div>
                     </div>
                 </br>
+                
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -39,6 +39,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">College</th>
                                         <th scope="col">Description</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,10 +48,14 @@
                                         <td>{{ object.name }}</td>
                                         <td>{{ object.college }}</td>
                                         <td>{{ object.description }}</td>
+                                        <td><a href="organization_list/{{ object.id }}">Edit</a> </td>
+                                       <td> <a href="organization_list/{{ object.id }}/delete" class="text-danger">Delete</a> </td>
                                     </tr>
                                     {% empty %}
                                     <tr>
-                                        <td colspan="3" class="text-center">No organizations found.</td>
+                                        <td colspan="3" class="text-center">
+                                            <p class="text-sm font-weight-bold mb-0">No Records Found</p> 
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
