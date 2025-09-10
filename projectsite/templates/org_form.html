@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
  <div class="content">
    <div class="container-fluid">
      <h4 class="page-title">Home</h4>
@@ -10,12 +12,11 @@
 Organization {% endif %}</div>
              <div class="card-category">Page Subtitle</div>
            </div>
- 194 
+  
            <div class="col-md-6">
            <div class="card-body">
              <form class="" action="" method="post" novalidate>
                {% csrf_token %} {% include 'includes/form.html' %}
- 199 
                  <div class="form-group">
                    <div class="col-md-12 col-sm-3">
                      <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
