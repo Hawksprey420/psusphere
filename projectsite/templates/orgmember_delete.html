@@ -1,1 +1,29 @@
-ECHO is on.
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="content">
+  <div class="container-fluid">
+    <h4 class="page-title">Organization Member</h4>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Delete Organization Member</div>
+            <div class="card-category">Page Subtitle</div>
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <form method="post">
+                {% csrf_token %}
+                <p>Are you sure you want to delete "{{ object }}"?</p>
+                <button type="submit" class="btn btn-danger btn-rounded">Confirm Delete</button>
+                <a href="{% url 'orgmember-list' %}" class="btn btn-secondary btn-rounded">Cancel</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

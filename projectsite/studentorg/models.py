@@ -11,6 +11,7 @@ class BaseModel (models.Model):
 
 class College(BaseModel):
     college_name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.college_name
