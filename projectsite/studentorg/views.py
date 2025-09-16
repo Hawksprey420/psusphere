@@ -17,17 +17,17 @@ class HomePageView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["total_students"] = Student.objects.count()
-        
+        context["total_organizations"] = Organization.objects.count()
+        context["total_programs"] = Program.objects.count()
+
         today = timezone.now().date()
         count = (
-            OrgMember.objects.filter(date_joined__year=today.year
-        )
-        .values("student")
-        .distinct()
-        .count()
+            OrgMember.objects.filter(date_joined__year=today.year)
+            .values("student").distinct().count()
         )
         context["students_joined_this_year"] = count
         return context
+
 
         
 
@@ -73,6 +73,17 @@ class OrgMemberList(ListView):
     template_name = 'orgmember_list.html'
     paginate_by = 5
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(
+                Q(student__first_name__icontains=query) |
+                Q(student__last_name__icontains=query) |
+                Q(organization__name__icontains=query)
+            )
+        return qs
+
 class OrgMemberCreateView(CreateView):
     model = OrgMember
     form_class = OrgMemberForm
@@ -96,6 +107,17 @@ class StudentList(ListView):
     template_name = 'student_list.html'
     paginate_by = 5
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query) |
+                Q(program__program_name__icontains=query)
+            )
+        return qs
+
 class StudentCreateView(CreateView):
     model = Student
     form_class = StudentForm
@@ -118,6 +140,16 @@ class CollegeList(ListView):
     context_object_name = 'colleges'
     template_name = 'college_list.html'
     paginate_by = 5
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(
+                Q(college_name__icontains=query) |
+                Q(description__icontains=query)
+            )
+        return qs
 
 class CollegeCreateView(CreateView):
     model = College
