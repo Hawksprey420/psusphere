@@ -28,9 +28,6 @@ class HomePageView(ListView):
         context["students_joined_this_year"] = count
         return context
 
-
-        
-
 class OrganizationList(ListView):
     model = Organization
     context_object_name = 'organization'
@@ -76,12 +73,22 @@ class OrgMemberList(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         query = self.request.GET.get('q')
+        sort_by = self.request.GET.get('sort_by')
+
+        # search
         if query:
             qs = qs.filter(
                 Q(student__first_name__icontains=query) |
                 Q(student__last_name__icontains=query) |
                 Q(organization__name__icontains=query)
             )
+
+        # sorting
+        allowed = ['student__first_name', 'student__last_name', 'date_joined']
+        if sort_by in allowed:
+            qs = qs.order_by(sort_by)
+        else:
+            qs = qs.order_by('student__first_name')
         return qs
 
 class OrgMemberCreateView(CreateView):
