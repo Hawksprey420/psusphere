@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-$ev8bw+g%ry0&x&gf4!kf1_=w0w8t46uf_+y_#75_cu110934-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hawksprey69.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['hawksprey69.pythonanywhere.com', '.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 
  
 if "pythonanywhere" in socket.gethostname(): 
-    SITE_ID = 4  # production site (psusphere.pythonanywhere.com) 
+    SITE_ID = 4  # production site (hawksprey69.pythonanywhere.com) 
 else: 
     SITE_ID = 3  # local site (127.0.0.1:8000) 
  
